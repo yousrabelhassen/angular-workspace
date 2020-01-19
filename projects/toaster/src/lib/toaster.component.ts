@@ -11,8 +11,14 @@ import { Toast, ToastPosition } from './toaster';
       <div class="toasts-top-left" *ngIf="toastsByPosition.get('top-left') as topLeftToasts">
         <lib-toast *ngFor="let toast of topLeftToasts" [toast]="toast"></lib-toast>
       </div>
-      <div class="toasts-top-right" *ngIf="toastsByPosition.get('top-right') as topRightToasts">
-        <lib-toast *ngFor="let toast of topRightToasts" [toast]="toast"></lib-toast>
+      <div class="toasts-top-right" 
+           *ngIf="groupedToasts || toastsByPosition.get('top-right')">
+        <div *ngIf="toastsByPosition.get('top-right') as topRightToasts">
+          <lib-toast *ngFor="let toast of topRightToasts" [toast]="toast"></lib-toast>
+        </div>
+        <div *ngIf="groupedToasts.length">
+          <div class="toasts-group">{{ groupedToasts.length }} more message(s)</div>
+        </div>
       </div>
       <div class="toasts-bottom-left" *ngIf="toastsByPosition.get('bottom-left') as bottomLeftToasts">
         <lib-toast *ngFor="let toast of bottomLeftToasts" [toast]="toast"></lib-toast>
@@ -27,11 +33,13 @@ import { Toast, ToastPosition } from './toaster';
     .toasts-top-right { position: fixed; top:0; right: 0;}
     .toasts-bottom-left { position: fixed; bottom:0; left: 0;}
     .toasts-bottom-right { position: fixed; bottom:0; right: 0;}
+    .toasts-group { padding: 10px; border: 1px solid gray;}
   `]
 })
 export class ToasterComponent implements OnInit, OnDestroy {
 
   toastsByPosition: Map<ToastPosition, Toast[]>;
+  groupedToasts: Toast[];
 
   private readonly _destroyed = new Subject<void>();
 
@@ -44,7 +52,10 @@ export class ToasterComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe(
-        toasts => this.createToastsByPositionMap(toasts)
+        toasts => {
+          this.groupedToasts = toasts.slice(5);
+          this.createToastsByPositionMap(toasts.slice(0, 5));
+        }
       );
   }
 
@@ -65,7 +76,6 @@ export class ToasterComponent implements OnInit, OnDestroy {
         )
       }
     );
-    console.log(JSON.stringify(this.toastsByPosition, null, 3));
   }
 
 }

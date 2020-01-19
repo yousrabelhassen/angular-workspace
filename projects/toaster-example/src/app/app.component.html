@@ -1,6 +1,36 @@
-
-<button (click)="createSuccessToast()">Success</button>
-<button (click)="createWarnToast()">Warn</button>
-<button (click)="createErrorToast()">Error</button>
+<table style="margin: auto;">
+    <tr>
+        <td>Top Right</td>
+        <td>Top Left</td>
+    </tr>
+    <tr>
+        <td>
+            <button (click)="createSuccessToast('top-left')">S</button>
+            <button (click)="createWarnToast('top-left')">W</button>
+            <button (click)="createErrorToast('top-left')">E</button>
+        </td>
+        <td>
+            <button (click)="createSuccessToast('top-right')">S</button>
+            <button (click)="createWarnToast('top-right')">W</button>
+            <button (click)="createErrorToast('top-right')">E</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button (click)="createSuccessToast('bottom-left')">S</button>
+            <button (click)="createWarnToast('bottom-left')">W</button>
+            <button (click)="createErrorToast('bottom-left')">E</button>
+        </td>
+        <td>
+            <button (click)="createSuccessToast('bottom-right')">S</button>
+            <button (click)="createWarnToast('bottom-right')">W</button>
+            <button (click)="createErrorToast('bottom-right')">E</button>
+        </td>
+    </tr>
+    <tr>
+        <td>Bottom Left</td>
+        <td>Bottom Right</td>
+    </tr>
+</table>
 
 <lib-toaster></lib-toaster>

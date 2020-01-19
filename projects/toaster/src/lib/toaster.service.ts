@@ -13,31 +13,37 @@ export class ToasterService {
 
   constructor(@Inject(TOASTER_DEFAULT_OPTIONS) private _defaultOptions: ToasterDefaultOptions) { }
 
-  success(heading: string,
+  success(
+    heading: string,
     message: string,
     subheading?: string,
     position = this._defaultOptions.position,
-    timeout = this._defaultOptions.timeout): void {
+    timeout = this._defaultOptions.timeout
+  ): void {
     this.showToast({
       type: 'success', heading: heading, message: message, subheading: subheading, position: position, timeout: timeout
     });
   }
 
-  warning(heading: string,
+  warning(
+    heading: string,
     message: string,
     subheading?: string,
     position = this._defaultOptions.position,
-    timeout = this._defaultOptions.timeout): void {
+    timeout = this._defaultOptions.timeout
+  ): void {
     this.showToast({
       type: 'warning', heading: heading, message: message, subheading: subheading, position: position, timeout: timeout
     });
   }
 
-  error(heading: string,
+  error(
+    heading: string,
     message: string,
     subheading?: string,
     position = this._defaultOptions.position,
-    timeout = this._defaultOptions.timeout): void {
+    timeout = this._defaultOptions.timeout
+  ): void {
     this.showToast({
       type: 'error', heading: heading, message: message, subheading: subheading, position: position, timeout: timeout
     });
