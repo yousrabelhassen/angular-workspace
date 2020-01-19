@@ -24,6 +24,7 @@ export function TOASTER_DEFAULT_OPTIONS_FACTORY(): ToasterDefaultOptions {
 }
 
 export interface Toast {
+    id: string,
     type: ToastType,
     heading: string,
     message: string,

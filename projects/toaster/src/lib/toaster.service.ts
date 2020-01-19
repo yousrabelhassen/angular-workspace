@@ -21,7 +21,13 @@ export class ToasterService {
     timeout = this._defaultOptions.timeout
   ): void {
     this.showToast({
-      type: 'success', heading: heading, message: message, subheading: subheading, position: position, timeout: timeout
+      id: this.generateToastId(),
+      type: 'success',
+      heading: heading,
+      message: message,
+      subheading: subheading,
+      position: position,
+      timeout: timeout
     });
   }
 
@@ -33,7 +39,13 @@ export class ToasterService {
     timeout = this._defaultOptions.timeout
   ): void {
     this.showToast({
-      type: 'warning', heading: heading, message: message, subheading: subheading, position: position, timeout: timeout
+      id: this.generateToastId(),
+      type: 'warning',
+      heading: heading,
+      message: message,
+      subheading: subheading,
+      position: position,
+      timeout: timeout
     });
   }
 
@@ -44,14 +56,32 @@ export class ToasterService {
     position = this._defaultOptions.position,
     timeout = this._defaultOptions.timeout
   ): void {
-    this.showToast({
-      type: 'error', heading: heading, message: message, subheading: subheading, position: position, timeout: timeout
-    });
+    const toast: Toast = {
+      id: this.generateToastId(),
+      type: 'error',
+      heading: heading,
+      message: message,
+      subheading: subheading,
+      position: position,
+      timeout: timeout
+    };
+    this.showToast(toast);
   }
 
-
   private showToast(toast: Toast): void {
+    setTimeout(
+      () => this.removeToastOnTimeout(toast.id),
+      toast.timeout
+    );
     this.toasts.next([...this.toasts.getValue(), toast]);
+  }
+
+  private generateToastId(): string {
+    return '_' + Math.random().toString(36).substr(2, 9);;
+  }
+
+  private removeToastOnTimeout(toastId: string): void {
+    this.toasts.next(this.toasts.getValue().filter(toast => toast.id !== toastId));
   }
 
 }
